@@ -104,11 +104,14 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
+if "message" not in st.session_state:
+    st.session_state.message = None
+
 st.subheader("Make a guess")
 
 st.info(
     f"Guess a number between 1 and 100. "
-    f"Attempts left: {attempt_limit - st.session_state.attempts}"
+    f"Attempts left: {max(attempt_limit - st.session_state.attempts, 0)}"
 )
 
 with st.expander("Developer Debug Info"):
@@ -144,6 +147,10 @@ if st.session_state.status != "playing":
         st.error("Game over. Start a new game to try again.")
     st.stop()
 
+if st.session_state.message and show_hint:
+    st.warning(st.session_state.message)
+    st.session_state.message = None
+
 if submit:
     ok, guess_int, err = parse_guess(raw_guess)
 
@@ -161,9 +168,6 @@ if submit:
 
         outcome, message = check_guess(guess_int, secret)
 
-        if show_hint:
-            st.warning(message)
-
         st.session_state.score = update_score(
             current_score=st.session_state.score,
             outcome=outcome,
@@ -173,18 +177,12 @@ if submit:
         if outcome == "Win":
             st.balloons()
             st.session_state.status = "won"
-            st.success(
-                f"You won! The secret was {st.session_state.secret}. "
-                f"Final score: {st.session_state.score}"
-            )
+        elif st.session_state.attempts >= attempt_limit:
+            st.session_state.status = "lost"
         else:
-            if st.session_state.attempts >= attempt_limit:
-                st.session_state.status = "lost"
-                st.error(
-                    f"Out of attempts! "
-                    f"The secret was {st.session_state.secret}. "
-                    f"Score: {st.session_state.score}"
-                )
+            st.session_state.message = message
+
+        st.rerun()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
