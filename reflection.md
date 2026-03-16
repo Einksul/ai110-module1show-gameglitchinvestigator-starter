@@ -43,6 +43,7 @@ displaying it to the screen.
 I made sure to create tests cases for each different functionality of the game. I asked claude to create tests for changing the difficulty,
 parsing and checking guesses, calculating the score, and whether the game states changed correctly when the conditions were met. I laid the
 outline of what we should be testing and asked for Claude to create the tests. As always, I read through the tests it created to see if they were valid.
+
 ---
 
 ## 4. What did you learn about Streamlit and state?
@@ -50,6 +51,8 @@ outline of what we should be testing and asked for Claude to create the tests. A
 - In your own words, explain why the secret number kept changing in the original app.
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 - What change did you make that finally gave the game a stable secret number?
+
+In my experience the secret number did not change when I inputted a different number D:, however it did not respect the bounds of the difficulty since it did not use the bounds of the difficulty. Claude did refactor the code to have all the calucaltions be run before rendering anything to the screen. What Streamlit does is when a button is press, it runs through the entire code with a flag of which button was pressed and what its value is. it then and recalculates any instruction again. Having the logic run below the UI made the UI show stale data and do computation with stale data. This was patched by moving the logic to the top, but was fully fixed when the logic was refactored and separated.  
 
 ---
 
@@ -59,3 +62,8 @@ outline of what we should be testing and asked for Claude to create the tests. A
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+I will definitely use AI more as a coding partner rather than an oracle. Rather than asking for fixes I ask for explanations, that way I am 
+still contributing to the project and am in full control. It is more productive to use AI as a aid rather than a replacement for coding. thatbeing said I would take more liberties to ask the AI agent to produce smaller code snippets and more coding change requests, so they are 
+more manageable and bugs are easier to be seen. This project showed me how much of a speed increase AI is, but that AI is still a tool and 
+misuing the tool can be disastorous. Rather than replacing out critical thinking AI should be an aid to enhance it. 

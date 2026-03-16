@@ -29,9 +29,19 @@ It wrote the code, ran away, and now the game is unplayable.
 - [ ] Detail which bugs you found.
 - [ ] Explain what fixes you applied.
 
+An all in one number guessing game!!! Can you guess this number? No matter if you just have bad luck or are a number guessing genie, this game is for YOU! freely choose the difficulty of the game and whether you get hints or not. 
+
+PATCH 1.102.11:
+- FIXED: UI showing incorrect attempts left
+- FIXED: UI showing incorrect hints
+- FIXED: number now respects the range set by the difficulty
+- FIXED: Changing difficulty now resets the game
+- FIXED: New game now restarts the game
+- FIXED: invalid inputs no longer use an attempt
+
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
+- [ ] ![win!](win.png)
 
 ## 🚀 Stretch Features
 
