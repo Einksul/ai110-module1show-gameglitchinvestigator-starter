@@ -40,6 +40,9 @@ displaying it to the screen.
   and what it showed you about your code.
 - Did AI help you design or understand any tests? How?
 
+I made sure to create tests cases for each different functionality of the game. I asked claude to create tests for changing the difficulty,
+parsing and checking guesses, calculating the score, and whether the game states changed correctly when the conditions were met. I laid the
+outline of what we should be testing and asked for Claude to create the tests. As always, I read through the tests it created to see if they were valid.
 ---
 
 ## 4. What did you learn about Streamlit and state?
