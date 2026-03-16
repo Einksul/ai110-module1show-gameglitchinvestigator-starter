@@ -1,66 +1,6 @@
 import random
 import streamlit as st
-
-def get_range_for_difficulty(difficulty: str):
-    if difficulty == "Easy":
-        return 1, 20
-    if difficulty == "Normal":
-        return 1, 50
-    if difficulty == "Hard":
-        return 1, 100
-    return 1, 100
-
-
-def parse_guess(raw: str):
-    if raw is None:
-        return False, None, "Enter a guess."
-
-    if raw == "":
-        return False, None, "Enter a guess."
-
-    try:
-        if "." in raw:
-            value = int(float(raw))
-        else:
-            value = int(raw)
-    except Exception:
-        return False, None, "That is not a number."
-
-    return True, value, None
-
-
-def check_guess(guess, secret):
-    if guess == secret:
-        return "Win", "🎉 Correct!"
-
-    try:
-        if guess < secret:
-            return "Too Low", "📈 Go HIGHER!"
-        else:
-            return "Too High", "📉 Go LOWER!"
-    except TypeError:
-        g = int(guess)
-        if g == int(secret):
-            return "Win", "🎉 Correct!"
-        if g < int(secret):
-            return "Too Low", "📈 Go HIGHER!"
-        return "Too High", "📉 Go LOWER!"
-
-
-def update_score(current_score: int, outcome: str, attempt_number: int):
-    if outcome == "Win":
-        points = 100 - 10 * (attempt_number + 1)
-        if points < 10:
-            points = 10
-        return current_score + points
-
-    if outcome == "Too High":
-        return current_score - 5
-
-    if outcome == "Too Low":
-        return current_score - 5
-
-    return current_score
+from logic_utils import get_range_for_difficulty, parse_guess, check_guess, update_score
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
@@ -87,7 +27,7 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-# --- Initialize session state ---
+
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
@@ -109,7 +49,7 @@ if "message" not in st.session_state:
 if "difficulty" not in st.session_state:
     st.session_state.difficulty = difficulty
 
-# Reset game when difficulty changes
+#FIX: changing the difficulty now restarts the game
 if st.session_state.difficulty != difficulty:
     st.session_state.difficulty = difficulty
     st.session_state.secret = random.randint(low, high)
@@ -119,7 +59,6 @@ if st.session_state.difficulty != difficulty:
     st.session_state.history = []
     st.session_state.message = None
 
-# --- Widgets (must be declared before we can read their values) ---
 st.subheader("Make a guess")
 
 raw_guess = st.text_input(
@@ -135,7 +74,7 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
-# --- State updates (all logic before any display) ---
+#FIX: handle the logic before we render data! So we don't render stale data
 if new_game:
     st.session_state.attempts = 0
     st.session_state.score = 0

@@ -24,6 +24,13 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
+I used claude code for this project. I first looked through the project, verifying the problems I saw first then asking claude. When I asked 
+Claude I would always specify the problem I was having and the general area to look. I used it to understand the codebase by asking both 
+where the error occured but also why it happened, clarifying libraries and APIs as needed. It correctly fixed the bug where an invalid input 
+would still decrement the attempts counter. However it struggled when I asked it to fix the incorrect attempts counting logic. It first
+suggested changes to the inequality check, but after talking we agreed that we would refactor the code and have the logic process before 
+displaying it to the screen.
+
 ---
 
 ## 3. Debugging and testing your fixes
